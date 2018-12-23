@@ -18,9 +18,11 @@
         <property name="personDao" ref="personDao"/>
     </bean>
     
+    <!-- 
     <bean id="tLogger" class="com.temp.log.TLogger">
         <property name="order" value="1"/>
     </bean>
+     -->
     
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
@@ -42,7 +44,7 @@
     </bean>
     
     <aop:config>
-        <aop:pointcut id="entryPointMethod" expression="execution(* com.temp.service..*ServiceImpl.*(..))"/>
+        <aop:pointcut id="entryPointMethod" expression="execution(* com.temp.service..*ServiceImpl.*(..))" />
         <aop:advisor advice-ref="transactionAdvice" pointcut-ref="entryPointMethod"/>
     </aop:config>
 </beans>

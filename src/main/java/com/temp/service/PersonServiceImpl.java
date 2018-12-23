@@ -11,6 +11,10 @@ public class PersonServiceImpl implements PersonService {
 	public Person login(String username, String pWord) {
 		return personDao.getPersonByUsernamePassword(username, pWord);
 	}
+	
+	public Person getByUsername(String username) {
+		return personDao.getPersonByUsername(username);
+	}
 
 	public void registerPerson(Person person) throws BusinessException {
 		if (doesPersonExist(person.getUsername(), person.getEmail())) {

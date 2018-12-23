@@ -53,6 +53,14 @@ public class MainController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String getLogin(@ModelAttribute("message")String message, ModelMap modelMap, HttpSession session, HttpServletRequest request) {
+		modelMap.addAttribute("message", message);
+		modelMap.addAttribute("command", new Person());
+		return "login";
+	}
+	
+	@RequestMapping(value = "/loginDone", method = RequestMethod.GET)
+	public String getLoginDone(@ModelAttribute("message")String message, ModelMap modelMap, HttpSession session, HttpServletRequest request) throws BusinessException {
+		if(request.getUserPrincipal() == null) return "login";
 		System.out.println(request.getUserPrincipal().getName());
 		if(request.isUserInRole("ROLE_USER")) {
 			System.out.println("logged in has role user");
@@ -66,7 +74,13 @@ public class MainController {
 		} else {
 			System.out.println("logged in DOES NOT has role admin");
 		}
+		
 		loggedinPerson = (Person) session.getAttribute("loggedinPerson");
+		if(loggedinPerson == null) {
+			loggedinPerson = personService.getByUsername(request.getUserPrincipal().getName());
+			session.setAttribute("loggedinPerson", loggedinPerson);
+		}
+		
 		if (loggedinPerson == null) {
 			modelMap.addAttribute("message", message);
 			modelMap.addAttribute("command", new Person());
@@ -98,7 +112,8 @@ public class MainController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*
+	 @RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String postLogin(@ModelAttribute("SpringWeb")Person person, ModelMap modelMap, HttpSession session) {
 		System.out.println("data: " + person.getUsername() + " " + person.getPassword());
 		Person foundPerson = personService.login(person.getUsername().toLowerCase().trim(), person.getPassword().trim());
@@ -127,6 +142,8 @@ public class MainController {
 		}
 		
 	}
+	 
+	 * */
 	
 	//addNote
 	@RequestMapping(value = "/addNote", method = RequestMethod.GET)

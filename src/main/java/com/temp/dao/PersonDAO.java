@@ -28,6 +28,17 @@ public class PersonDAO {
 			return null;
 		}
 	}
+	
+	public Person getPersonByUsername(String username) {
+		Query query = sessionFactory.getCurrentSession().createQuery("from Person where username = :username");
+		query.setParameter("username", username);
+		List <Person> personList = query.getResultList();
+		if(personList != null && !personList.isEmpty()) {
+			return personList.get(0);
+		} else {
+			return null;
+		}
+	}
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;

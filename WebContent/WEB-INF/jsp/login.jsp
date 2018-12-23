@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE HTML>
 <!--
@@ -15,7 +16,14 @@
 		<link rel="stylesheet" href="${customCSS}" />
 	</head>
 	<body>
-
+<c:if test="${param.error == 'true'}">
+         <div style="color:red;margin:10px 0px;">
+          
+                Login Failed!!!<br />
+                Reason :  ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+                 
+         </div>
+    </c:if>
 		<!-- Header -->
 			<header id="header" class="alt">
 				<div class="logo"><a href="index.html">Transitive <span>by TEMPLATED</span></a></div>
@@ -55,10 +63,10 @@
 								<h2 class="align-center">Log in</h2>
 								<hr />
 								<div class="field">
-										${message}
+										${{message}}
 								</div>
 								<br>
-								<form:form method ="POST" action ="/TempratureCheckWebSec/login.html">
+								<form:form method ="POST" action ="/TempratureCheckWebSec/login">
 									<div class="field">
 										<form:label for="username" path="username">Username</form:label>
 										<form:input id="username" type="text" placeholder="Username" path="username" ></form:input>
