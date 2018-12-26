@@ -18,12 +18,6 @@
         <property name="personDao" ref="personDao"/>
     </bean>
     
-    <!-- 
-    <bean id="tLogger" class="com.temp.log.TLogger">
-        <property name="order" value="1"/>
-    </bean>
-     -->
-    
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="get*" read-only="true"/>
